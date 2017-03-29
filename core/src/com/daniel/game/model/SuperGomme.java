@@ -5,16 +5,19 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.daniel.game.view.TextureFactory;
 
-public class Block extends GameElement {
+public class SuperGomme extends GameElement {
 
 	public float SIZE;
-	public Block(Vector2 position, World world) {
+	public boolean estManger;
+	public SuperGomme(Vector2 position, World world) {
 		super(position, world);
 		SIZE = 0;
-		body = new Rectangle(position.x, position.y,16, 16);
+		body = new Rectangle(position.x+7, position.y+7, 2, 2);
+		estManger = false;
 	}
 	
 	public TextureRegion getTexture(){
+		TextureFactory.getInstance();
 		return TextureFactory.iTexturable(this);
 	}
 	

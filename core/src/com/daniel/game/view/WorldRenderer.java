@@ -1,10 +1,11 @@
 package com.daniel.game.view;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.daniel.game.model.World;
 import com.daniel.game.model.GameElement;
+import com.daniel.game.model.Score;
 
 public class WorldRenderer{
 	
@@ -12,22 +13,38 @@ public class WorldRenderer{
 	private int ppuX;
 	private int ppuY;
 	private World world;
+	private BitmapFont font;
+	FPSLogger fps;
 	
 	public WorldRenderer(World world){
 		this.world = world;
 		ppuX = 0;
 		ppuY = 0;
 		spriteBatch = new SpriteBatch();
+		font = new BitmapFont();
+		fps = new FPSLogger();
 	}
 	
 	public void render(){
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		spriteBatch.begin();
 		TextureFactory.getInstance();
+		world.testTempsFantomeMange();
+		world.getPacman().update(.125f);
+		world.getFantome1().update(.125f*.5f);
+		world.getFantome2().update(.125f*.5f);
+		world.getFantome3().update(.125f*.5f);	
+		spriteBatch.begin();
+		//fps.log();
 		for(GameElement ge : world){
-			spriteBatch.draw(TextureFactory.getTexture(ge),ge.getHeight(),ge.getWidth());
+			try{
+			spriteBatch.draw(TextureFactory.iTexturable(ge),ge.getHeight(),ge.getWidth());
+			}
+			catch(Exception e){
+			}
 		}
+		font.draw(spriteBatch,"Score : " + Score.getScore(), 455, 248 );
+		
+		font.draw(spriteBatch,"Temps : " + Score.getTimeMinute() + "min " + Score.getTimeSeconde() + "sec", 455, 230 );
+		
 		spriteBatch.end();
 	}
 

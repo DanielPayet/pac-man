@@ -5,13 +5,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.daniel.game.view.TextureFactory;
 
-public class Block extends GameElement {
+public class DoorGhost extends GameElement {
 
 	public float SIZE;
-	public Block(Vector2 position, World world) {
+	public DoorGhost(Vector2 position, World world) {
 		super(position, world);
 		SIZE = 0;
-		body = new Rectangle(position.x, position.y,16, 16);
+		body = new Rectangle(position.x, position.y, 16, 16);
 	}
 	
 	public TextureRegion getTexture(){

@@ -1,14 +1,15 @@
 package com.daniel.game.model;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.daniel.game.model.World;
 
 public abstract class GameElement {
 	
 	protected Vector2 position ;
-	@SuppressWarnings("unused")
-	private World world;
+	protected World world;
+	protected Rectangle body;
 	
 	public GameElement(Vector2 position, World world ){
 		this.position = position;
@@ -18,8 +19,21 @@ public abstract class GameElement {
 	public Vector2 getPosition(){
 		return position;
 	}
+	
+	public World getWorld(){
+		return world;
+	}
+
+	public Rectangle getBody() {
+		return body;
+	}
+
+	protected void setBody(float a, float b) {
+		body.setPosition(a, b);
+	}
+
 	abstract public float getWidth();
 	abstract public float getHeight();
 	
-	abstract public Texture getTexture();
+	abstract public TextureRegion getTexture();
 }
