@@ -10,7 +10,7 @@ import com.daniel.game.model.GameElement;
 import com.daniel.game.model.Pacman;
 
 public class Astar {
-	public static noeud astar(int[][] tab, noeud dep, noeud fin) {
+	public static noeud astar(int[][] tab, noeud dep, noeud fin, Fantomes fe) {
 		LinkedList<noeud> lifo = new LinkedList<noeud>();
 		Comparator<noeud> comp = new heuristiqueCompare();
 		PriorityQueue<noeud> openList = new PriorityQueue<noeud>(20, comp);
@@ -23,7 +23,11 @@ public class Astar {
 			u = openList.poll();
 			closedList.add(u);
 
-			ArrayList<noeud> voisin= voisin(tab,fin, u);
+			ArrayList<noeud> voisin;
+				if(fe.estMort)
+					voisin = voisinDEAD(tab,fin, u);
+				else
+					voisin = voisin(tab,fin, u);
 
 			for (noeud succ : voisin) {
 				if(u.getX() == fin.getX() && u.getY() == fin.getY()){
@@ -48,7 +52,6 @@ public class Astar {
 				
 			}
 		}
-		lifo.pollFirst();
 		return lifo.pollFirst();
 	}
 	
@@ -56,7 +59,7 @@ public class Astar {
 		ArrayList<noeud> voisin = new ArrayList<noeud>();
 		noeud n;
 		
-		if(u.getY()-1 >= 0 && u.getY() +1 < 28 && u.getX()-1 >= 0 && u.getX()+1 < 32){
+		if(u.getY()-1 >= 0 && u.getY() +1 < 28 && u.getX()-1 >= 0 && u.getX()+1 < 31){
 			if(lab[u.getX()][u.getY()-1] != 1 && lab[u.getX()][u.getY()-1] != 2){
 				n = new noeud(u.getX(),u.getY()-1);
 				n.setHeuristique(fin);
@@ -76,6 +79,40 @@ public class Astar {
 				voisin.add(n);
 			}
 			if(lab[u.getX()][u.getY()+1] != 1 && lab[u.getX()][u.getY()+1] != 2){
+				n = new noeud(u.getX(),u.getY()+1);
+				n.setHeuristique(fin);
+				n.setPere(u);
+				voisin.add(n);
+			}
+		}
+		return voisin;
+		
+	}
+	
+	private static ArrayList<noeud> voisinDEAD(int lab[][], noeud fin,noeud u){
+		ArrayList<noeud> voisin = new ArrayList<noeud>();
+		noeud n;
+		
+		if(u.getY()-1 >= 0 && u.getY() +1 < 28 && u.getX()-1 >= 0 && u.getX()+1 < 31){
+			if(lab[u.getX()][u.getY()-1] != 1){
+				n = new noeud(u.getX(),u.getY()-1);
+				n.setHeuristique(fin);
+				n.setPere(u);
+				voisin.add(n);
+			}
+			if(lab[u.getX()-1][u.getY()] != 1){
+				n = new noeud(u.getX()-1,u.getY());
+				n.setHeuristique(fin);
+				n.setPere(u);
+				voisin.add(n);
+			}
+			if(lab[u.getX()+1][u.getY()] != 1){
+				n = new noeud(u.getX()+1,u.getY());
+				n.setHeuristique(fin);
+				n.setPere(u);
+				voisin.add(n);
+			}
+			if(lab[u.getX()][u.getY()+1] != 1){
 				n = new noeud(u.getX(),u.getY()+1);
 				n.setHeuristique(fin);
 				n.setPere(u);

@@ -1,19 +1,11 @@
 package com.daniel.game.model;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.PriorityQueue;
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.daniel.game.outil.Astar;
-import com.daniel.game.outil.heuristiqueCompare;
 import com.daniel.game.outil.noeud;
 import com.daniel.game.view.TextureFactory;
 
-@SuppressWarnings("unused")
 public class Fantome2 extends Fantomes {
 	
 	public Fantome2(Vector2 position, World world) {
@@ -40,7 +32,7 @@ public class Fantome2 extends Fantomes {
 			lab[Xf][Yf] = 3 ; 
 			lab[Xp][Yp] = 4 ;
 			
-			noeud prochainNoeud = Astar.astar(lab,new noeud(Xf,Yf)  ,new noeud(Xp,Yp));
+			noeud prochainNoeud = Astar.astar(lab,new noeud(Xf,Yf)  ,new noeud(Xp,Yp),this);
 			
 			if(prochainNoeud != null){
 				boolean continueOldDir = false ; 

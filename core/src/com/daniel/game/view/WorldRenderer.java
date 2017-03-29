@@ -33,7 +33,7 @@ public class WorldRenderer{
 		world.getFantome2().update(.125f*.5f);
 		world.getFantome3().update(.125f*.5f);	
 		spriteBatch.begin();
-		//fps.log();
+		fps.log();
 		for(GameElement ge : world){
 			try{
 			spriteBatch.draw(TextureFactory.iTexturable(ge),ge.getHeight(),ge.getWidth());
