@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.daniel.game.outil.Astar;
+import com.daniel.game.outil.noeud;
 import com.daniel.game.screens.LoseScreen;
 
 public abstract class Fantomes extends GameElement {
@@ -15,26 +17,25 @@ public abstract class Fantomes extends GameElement {
 	public boolean estMangable ;
 	public boolean haveBeenEaten;
 	protected long timeStart;
+	public boolean estMort;
 	
-	public void GoHome(){
-		position.x = positionDep.x;
-		position.y = positionDep.y;
+	public void GoHome(float delta){
 		body.x = positionDep.x;
 		body.y = positionDep.y;
 		estSortiMaison = false;
-		estMangable = false;
 		haveBeenEaten = true;
+		estMort = true;
 	}
-	public void tryIsCollidedWithPacMan(){
+	public void tryIsCollidedWithPacMan(float delta){
 		if(world.getPacman().getBody().overlaps(this.body))
 			if(estMangable){
-				GoHome();
+				GoHome(delta);
 			}
 			else{
 				((Game)Gdx.app.getApplicationListener()).setScreen(new LoseScreen());
 			}
 	}
-	
+
 	public Fantomes(Vector2 position, World world) {
 		super(position, world);
 		body = new Rectangle(position.x, position.y, 16,16);
@@ -42,8 +43,9 @@ public abstract class Fantomes extends GameElement {
 		estMangable = false;
 		haveBeenEaten = false;
 		timeStart = world.timeStart;
+		estMort = false;
 	}
-	
+
 	public boolean isLeftMove() {
 		return leftMove;
 	}
@@ -63,15 +65,15 @@ public abstract class Fantomes extends GameElement {
 	public boolean isCollided(Rectangle rect){
 		return rect.overlaps(body);
 	}
-	
+
 	public float getWidth(){
 		return position.x;
 	}
-	
+
 	public float getHeight(){
 		return position.y;
 	}
-	
+
 	protected void leftMove(float delta){
 		boolean estTouche = false;
 		setBody(position.x,position.y-16*delta);
@@ -82,7 +84,7 @@ public abstract class Fantomes extends GameElement {
 				setBody(position.x,position.y);
 			}
 		}
-		tryIsCollidedWithPacMan();
+		tryIsCollidedWithPacMan(delta);
 		if(!estTouche){
 			GameElement b = world.getMaze().getTeleportation().get(0);
 			if(this.isCollided(b.getBody())){
@@ -93,7 +95,7 @@ public abstract class Fantomes extends GameElement {
 				setBody(position.x,position.y);
 			}
 		}
-		
+
 	}
 	protected void rightMove(float delta){
 		boolean estTouche = false;
@@ -105,7 +107,7 @@ public abstract class Fantomes extends GameElement {
 				setBody(position.x,position.y);
 			}
 		}
-		tryIsCollidedWithPacMan();
+		tryIsCollidedWithPacMan(delta);
 		if(!estTouche){
 			GameElement b = world.getMaze().getTeleportation().get(1);
 			if(this.isCollided(b.getBody())){
@@ -127,7 +129,7 @@ public abstract class Fantomes extends GameElement {
 				setBody(position.x,position.y);
 			}
 		}
-		tryIsCollidedWithPacMan();
+		tryIsCollidedWithPacMan(delta);
 		if(!estTouche){
 			position.x +=16*delta;
 			setBody(position.x,position.y);
@@ -143,19 +145,19 @@ public abstract class Fantomes extends GameElement {
 				setBody(position.x,position.y);
 			}
 		}
-		tryIsCollidedWithPacMan();
+		tryIsCollidedWithPacMan(delta);
 		if(!estTouche){
 			position.x -=16*delta;
 			setBody(position.x,position.y);
 		}
 	}
-	
+
 	protected boolean tryLeftMove(float delta){
 		setBody(position.x,position.y-16*delta);
 		for(GameElement b : world.getMaze()){
 			if(this.isCollided(b.getBody()) && b.getPosition().y+16 == this.getPosition().y){
 				return false;
-				
+
 			}
 		}
 		setBody(position.x,position.y);
@@ -166,7 +168,7 @@ public abstract class Fantomes extends GameElement {
 		for(GameElement b : world.getMaze()){
 			if(this.isCollided(b.getBody()) && b.getPosition().y == this.getPosition().y+16){
 				return false;
-				
+
 			}
 		}
 		setBody(position.x,position.y);
@@ -177,7 +179,7 @@ public abstract class Fantomes extends GameElement {
 		for(GameElement b : world.getMaze()){
 			if(this.isCollided(b.getBody()) && b.getPosition().x == this.getPosition().x+16){
 				return false;
-				
+
 			}
 		}
 		setBody(position.x,position.y);
@@ -193,7 +195,7 @@ public abstract class Fantomes extends GameElement {
 		setBody(position.x,position.y);
 		return true;
 	}
-	
+
 	protected void setLeftMove(boolean t){
 		leftMove = t;
 	}
@@ -210,16 +212,12 @@ public abstract class Fantomes extends GameElement {
 	public abstract TextureRegion getTexture();
 	public abstract void update(float delta);
 	public abstract void sortirMaison(float delta);
-	
+
 	protected void sortir(float delta, int duree){
+		estMangable = false;
 		long time = System.currentTimeMillis();
 		long timeRef = timeStart;
 		int duration = duree;
-		if(haveBeenEaten){
-			duration = 5000;
-			timeRef = world.timeStartFantomeEat;
-		}
-		
 		if(time - timeRef >= duration){
 			upMove = true;
 			if(position.x + 16 * delta <= (30-11)*16){
@@ -228,6 +226,164 @@ public abstract class Fantomes extends GameElement {
 			}
 			else{
 				estSortiMaison = true;
+			}
+		}
+	}
+
+	protected void leftMoveDEAD(float delta){
+		boolean estTouche = false;
+		setBody(position.x,position.y-16*delta);
+		for(GameElement b : world.getMaze()){
+			if(this.isCollided(b.getBody()) && b.getPosition().y+16 == this.getPosition().y){
+				leftMove = false;
+				estTouche = true;
+				setBody(position.x,position.y);
+			}
+		}
+		if(!estTouche){
+			GameElement b = world.getMaze().getTeleportation().get(0);
+			if(this.isCollided(b.getBody())){
+				position.y = 16*27;
+			}
+			else{
+				position.y -=16*delta;
+				setBody(position.x,position.y);
+			}
+		}
+
+	}
+	protected void rightMoveDEAD(float delta){
+		boolean estTouche = false;
+		setBody(position.x,position.y+16*delta);
+		for(GameElement b : world.getMaze()){
+			if(this.isCollided(b.getBody()) && b.getPosition().y == this.getPosition().y+16){
+				rightMove = false;
+				estTouche = true;
+				setBody(position.x,position.y);
+			}
+		}
+		if(!estTouche){
+			GameElement b = world.getMaze().getTeleportation().get(1);
+			if(this.isCollided(b.getBody())){
+				position.y = 16*0;
+			}
+			else{
+				position.y +=16*delta;
+				setBody(position.x,position.y);
+			}
+		}
+	}
+	protected void upMoveDEAD(float delta){
+		boolean estTouche = false;
+		setBody(position.x+16*delta,position.y);
+		for(GameElement b : world.getMaze()){
+			if(this.isCollided(b.getBody()) && b.getPosition().x == this.getPosition().x+16){
+				upMove = false;
+				estTouche = true;
+				setBody(position.x,position.y);
+			}
+		}
+		if(!estTouche){
+			position.x +=16*delta;
+			setBody(position.x,position.y);
+		}
+	}
+	protected void downMoveDEAD(float delta){
+		boolean estTouche = false;
+		setBody(position.x-16*delta,position.y);
+		for(GameElement b : world.getMaze()){
+			if(this.isCollided(b.getBody()) && b.getPosition().x+16 == this.getPosition().x){
+				downMove = false;
+				estTouche = true;
+				setBody(position.x,position.y);
+			}
+		}
+		if(!estTouche){
+			position.x -=16*delta;
+			setBody(position.x,position.y);
+		}
+	}
+
+	protected void backToHome(float delta){
+		int Xf = 30-(Astar.arrondiPosX(this.position.x, this)/16);
+		int Yf = (Astar.arrondiPosY(this.position.y,this)/16);
+		int Xp = ((int)positionDep.x);
+		int Yp = ((int)positionDep.y);
+		int lab[][] = world.getMaze().labDemo;
+
+		if(Xf == Xp && Yf == Yp){
+			estMort = false;
+		}
+		else{
+			noeud prochainNoeud = Astar.astar(lab,new noeud(Xf,Yf)  ,new noeud(Xp,Yp));
+
+			if(prochainNoeud != null){
+
+				boolean continueOldDir = false ; 
+				if(prochainNoeud.getX() < Xf){
+					if(tryUpMove(delta)){
+						rightMove = leftMove = downMove = false;
+						upMove = true;
+						upMoveDEAD(delta);
+					}
+					else
+						continueOldDir = true;
+				}
+				if(prochainNoeud.getX() > Xf){
+					if(tryDownMove(delta)){
+						rightMove = upMove = leftMove = false;
+						downMove = true;
+						downMoveDEAD(delta);
+					}
+					else
+						continueOldDir = true;
+				}
+				if(prochainNoeud.getY() > Yf){
+					if(tryRightMove(delta)){
+						leftMove = upMove = downMove = false;
+						rightMove = true;
+						rightMoveDEAD(delta);
+					}
+					else
+						continueOldDir = true;
+				}
+				if(prochainNoeud.getY() < Yf){
+					if(tryLeftMove(delta)){
+						rightMove = upMove = downMove = false;
+						leftMove = true;
+						leftMoveDEAD(delta);
+					}
+					else
+						continueOldDir = true;
+				}
+				if(continueOldDir){
+					if(leftMove){
+						leftMoveDEAD(delta);
+					}
+					else if(rightMove){
+						rightMoveDEAD(delta);
+					}
+					else if(upMove){
+						upMoveDEAD(delta);
+					}
+					else if(downMove){
+						downMoveDEAD(delta);
+					}
+				}
+			}
+			else{
+				if(leftMove){
+					leftMoveDEAD(delta);
+				}
+				else if(rightMove){
+					rightMoveDEAD(delta);
+				}
+				else if(upMove){
+					upMoveDEAD(delta);
+				}
+				else if(downMove){
+					downMoveDEAD(delta);
+				}
 			}
 		}
 	}

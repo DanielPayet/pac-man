@@ -16,7 +16,10 @@ public class Fantome3 extends Fantomes {
 	}
 
 	public void update(float delta){
-		if(!estSortiMaison){
+		if(estMort){
+			backToHome(delta);
+		}
+		else if(!estSortiMaison){
 			sortirMaison(delta);
 		}
 		else{

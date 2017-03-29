@@ -41,6 +41,7 @@ public class TextureFactory {
 	private static TextureRegion fantome2;
 	private static TextureRegion fantome3;
 	private static TextureRegion fantomeEscape;
+	private static TextureRegion fantomedead;
 	private static TextureRegion regionCourante2;
 	private static TextureRegion tabRegionFantome1[];
 	private static Animation<TextureRegion> animationFantome1;
@@ -110,6 +111,13 @@ public class TextureFactory {
 		return fantomeEscape;
 	}
 	
+	public static TextureRegion getTextureFantomeDEAD(){
+		if( fantomedead == null ){
+			fantomedead = new TextureRegion(new Texture(Gdx.files.internal("ghostDead.png")));
+		}
+		return fantomedead;
+	}
+	
 	public static TextureRegion getTextureBloc(){
 		if( bloc == null ){
 			Pixmap bloc48 = new Pixmap(Gdx.files.internal("bloc.png"));
@@ -160,6 +168,8 @@ public class TextureFactory {
 					return animationEscape1();
 				else
 					return getTextureFantomeEscpae();
+			else if(((Fantomes) ge).estMort)
+				return getTextureFantomeDEAD();
 			else{
 				return getTextureFantome1();
 			}
@@ -170,6 +180,8 @@ public class TextureFactory {
 					return animationEscape2();
 				else
 					return getTextureFantomeEscpae();
+			else if(((Fantomes) ge).estMort)
+				return getTextureFantomeDEAD();
 			else{
 				return getTextureFantome2();
 			}
@@ -180,6 +192,8 @@ public class TextureFactory {
 					return animationEscape3();
 				else
 					return getTextureFantomeEscpae();
+			else if(((Fantomes) ge).estMort)
+				return getTextureFantomeDEAD();
 			else{
 				return getTextureFantome3();
 			}
