@@ -1,6 +1,7 @@
 package com.daniel.game.model;
 
 import com.daniel.game.model.World;
+import com.daniel.game.view.WorldRenderer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -77,21 +78,21 @@ public class Maze implements Iterable<GameElement>{
 		for(int i = 0 ; i < 31 ; i++){
 			for(int j = 0 ; j < 28 ; j++){
 				if(labDemo[i][j] == 1){
-					blocs.add(new Block(new Vector2(((30-i)*16) ,16*j), world));
+					blocs.add(new Block(new Vector2(((30-i)*WorldRenderer.ppuX) ,WorldRenderer.ppuX*j), world));
 				}
 				if(labDemo[i][j] == 0){
-					gommes.add(new Gomme(new Vector2(((30-i)*16) ,16*j), world));
+					gommes.add(new Gomme(new Vector2(((30-i)*WorldRenderer.ppuX) ,WorldRenderer.ppuX*j), world));
 				}
 				if(labDemo[i][j] == 5){
-					gommes.add(new SuperGomme(new Vector2(((30-i)*16) ,16*j), world));
+					gommes.add(new SuperGomme(new Vector2(((30-i)*WorldRenderer.ppuX) ,WorldRenderer.ppuX*j), world));
 				}
 				
 			}
 		}
-		blocs.add(new DoorGhost(new Vector2((30-12)*16,14*16),world));
-		blocs.add(new DoorGhost(new Vector2((30-12)*16,13*16),world));
-		teleportation.add(new Block(new Vector2(((30-14)*16) , -16), world));
-		teleportation.add(new Block(new Vector2(((30-14)*16) ,16*28), world));
+		blocs.add(new DoorGhost(new Vector2((30-12)*WorldRenderer.ppuX,14*WorldRenderer.ppuX),world));
+		blocs.add(new DoorGhost(new Vector2((30-12)*WorldRenderer.ppuX,13*WorldRenderer.ppuX),world));
+		teleportation.add(new Block(new Vector2(((30-14)*WorldRenderer.ppuX) , -WorldRenderer.ppuX), world));
+		teleportation.add(new Block(new Vector2(((30-14)*WorldRenderer.ppuX) ,WorldRenderer.ppuX*28), world));
 	}
 	
 	public Iterator<GameElement> iterator(){		

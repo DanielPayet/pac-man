@@ -23,6 +23,7 @@ public class GameScreen  implements Screen {
 	public void show(){
 		world = new World();
 		renderer = new WorldRenderer(world);
+		world.createWorld();
 		Gdx.input.setInputProcessor(new EcouteurClavier(world));
 	}
 	

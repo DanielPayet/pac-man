@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.daniel.game.ecouteur.EcouteurClavier;
 import com.daniel.game.view.TextureFactory;
+import com.daniel.game.view.WorldRenderer;
 
 public class Pacman extends GameElement {
 
@@ -30,7 +31,7 @@ public class Pacman extends GameElement {
 	public Pacman(Vector2 position, World world) {
 		super(position, world);
 		SIZE = 0;
-		body = new Rectangle(position.x, position.y, 16, 16);
+		body = new Rectangle(position.x, position.y, WorldRenderer.ppuX, WorldRenderer.ppuX);
 		leftMove = true;
 	}
 
@@ -51,9 +52,9 @@ public class Pacman extends GameElement {
 	
 	private void leftMove(float delta){
 		boolean estTouche = false;
-		setBody(position.x,position.y-16*delta);
+		setBody(position.x,position.y-WorldRenderer.ppuX*delta);
 		for(GameElement b : world.getMaze()){
-			if(this.isCollided(b.getBody()) && b.getPosition().y+16 == this.getPosition().y){
+			if(this.isCollided(b.getBody()) && b.getPosition().y+WorldRenderer.ppuX == this.getPosition().y){
 				leftMove = false;
 				estTouche = true;
 				setBody(position.x,position.y);
@@ -63,10 +64,10 @@ public class Pacman extends GameElement {
 			tryEat();
 			GameElement b = world.getMaze().getTeleportation().get(0);
 			if(this.isCollided(b.getBody())){
-				position.y = 16*27;
+				position.y = WorldRenderer.ppuX*27;
 			}
 			else{
-				position.y -=16*delta;
+				position.y -=WorldRenderer.ppuX*delta;
 				setBody(position.x,position.y);
 			}
 		}
@@ -74,9 +75,9 @@ public class Pacman extends GameElement {
 	}
 	private void rightMove(float delta){
 		boolean estTouche = false;
-		setBody(position.x,position.y+16*delta);
+		setBody(position.x,position.y+WorldRenderer.ppuX*delta);
 		for(GameElement b : world.getMaze()){
-			if(this.isCollided(b.getBody()) && b.getPosition().y == this.getPosition().y+16){
+			if(this.isCollided(b.getBody()) && b.getPosition().y == this.getPosition().y+WorldRenderer.ppuX){
 				rightMove = false;
 				estTouche = true;
 				setBody(position.x,position.y);
@@ -86,19 +87,19 @@ public class Pacman extends GameElement {
 			tryEat();
 			GameElement b = world.getMaze().getTeleportation().get(1);
 			if(this.isCollided(b.getBody())){
-				position.y = 16*0;
+				position.y = WorldRenderer.ppuX*0;
 			}
 			else{
-				position.y +=16*delta;
+				position.y +=WorldRenderer.ppuX*delta;
 				setBody(position.x,position.y);
 			}
 		}
 	}
 	private void upMove(float delta){
 		boolean estTouche = false;
-		setBody(position.x+16*delta,position.y);
+		setBody(position.x+WorldRenderer.ppuX*delta,position.y);
 		for(GameElement b : world.getMaze()){
-			if(this.isCollided(b.getBody()) && b.getPosition().x == this.getPosition().x+16){
+			if(this.isCollided(b.getBody()) && b.getPosition().x == this.getPosition().x+WorldRenderer.ppuX){
 				upMove = false;
 				estTouche = true;
 				setBody(position.x,position.y);
@@ -106,15 +107,15 @@ public class Pacman extends GameElement {
 		}
 		if(!estTouche){
 			tryEat();
-			position.x +=16*delta;
+			position.x +=WorldRenderer.ppuX*delta;
 			setBody(position.x,position.y);
 		}
 	}
 	private void downMove(float delta){
 		boolean estTouche = false;
-		setBody(position.x-16*delta,position.y);
+		setBody(position.x-WorldRenderer.ppuX*delta,position.y);
 		for(GameElement b : world.getMaze()){
-			if(this.isCollided(b.getBody()) && b.getPosition().x+16 == this.getPosition().x){
+			if(this.isCollided(b.getBody()) && b.getPosition().x+WorldRenderer.ppuX == this.getPosition().x){
 				downMove = false;
 				estTouche = true;
 				setBody(position.x,position.y);
@@ -122,15 +123,15 @@ public class Pacman extends GameElement {
 		}
 		if(!estTouche){
 			tryEat();
-			position.x -=16*delta;
+			position.x -=WorldRenderer.ppuX*delta;
 			setBody(position.x,position.y);
 		}
 	}
 	
 	private boolean tryLeftMove(float delta){
-		setBody(position.x,position.y-16*delta);
+		setBody(position.x,position.y-WorldRenderer.ppuX*delta);
 		for(GameElement b : world.getMaze()){
-			if(this.isCollided(b.getBody()) && b.getPosition().y+16 == this.getPosition().y){
+			if(this.isCollided(b.getBody()) && b.getPosition().y+WorldRenderer.ppuX == this.getPosition().y){
 				return false;
 				
 			}
@@ -139,9 +140,9 @@ public class Pacman extends GameElement {
 		return true;
 	}
 	private boolean tryRightMove(float delta){
-		setBody(position.x,position.y+16*delta);
+		setBody(position.x,position.y+WorldRenderer.ppuX*delta);
 		for(GameElement b : world.getMaze()){
-			if(this.isCollided(b.getBody()) && b.getPosition().y == this.getPosition().y+16){
+			if(this.isCollided(b.getBody()) && b.getPosition().y == this.getPosition().y+WorldRenderer.ppuX){
 				return false;
 				
 			}
@@ -150,9 +151,9 @@ public class Pacman extends GameElement {
 		return true;
 	}
 	private boolean tryUpMove(float delta){
-		setBody(position.x+16*delta,position.y);
+		setBody(position.x+WorldRenderer.ppuX*delta,position.y);
 		for(GameElement b : world.getMaze()){
-			if(this.isCollided(b.getBody()) && b.getPosition().x == this.getPosition().x+16){
+			if(this.isCollided(b.getBody()) && b.getPosition().x == this.getPosition().x+WorldRenderer.ppuX){
 				return false;
 				
 			}
@@ -161,9 +162,9 @@ public class Pacman extends GameElement {
 		return true;
 	}
 	private boolean tryDownMove(float delta){
-		setBody(position.x-16*delta,position.y);
+		setBody(position.x-WorldRenderer.ppuX*delta,position.y);
 		for(GameElement b : world.getMaze()){
-			if(this.isCollided(b.getBody()) && b.getPosition().x+16 == this.getPosition().x){
+			if(this.isCollided(b.getBody()) && b.getPosition().x+WorldRenderer.ppuX == this.getPosition().x){
 				return false;
 			}
 		}

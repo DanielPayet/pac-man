@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.daniel.game.outil.Astar;
 import com.daniel.game.outil.noeud;
 import com.daniel.game.view.TextureFactory;
+import com.daniel.game.view.WorldRenderer;
 
 public class Fantome2 extends Fantomes {
 	
@@ -24,10 +25,10 @@ public class Fantome2 extends Fantomes {
 			sortirMaison(delta);
 		}
 		else{
-			int Xf = 30-(Astar.arrondiPosX(this.position.x, this)/16);
-			int Yf = (Astar.arrondiPosY(this.position.y,this)/16);
-			int Xp = 30-(Astar.arrondiPosX(world.getPacman().position.x,world.getPacman())/16);
-			int Yp = (Astar.arrondiPosY(world.getPacman().position.y,world.getPacman())/16); 
+			int Xf = 30-(Astar.arrondiPosX(this.position.x, this)/WorldRenderer.ppuX);
+			int Yf = (Astar.arrondiPosY(this.position.y,this)/WorldRenderer.ppuX);
+			int Xp = 30-(Astar.arrondiPosX(world.getPacman().position.x,world.getPacman())/WorldRenderer.ppuX);
+			int Yp = (Astar.arrondiPosY(world.getPacman().position.y,world.getPacman())/WorldRenderer.ppuX); 
 			int lab[][] = world.getMaze().labDemo;
 			lab[Xf][Yf] = 3 ; 
 			lab[Xp][Yp] = 4 ;

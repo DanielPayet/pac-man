@@ -121,7 +121,7 @@ public class TextureFactory {
 	public static TextureRegion getTextureBloc(){
 		if( bloc == null ){
 			Pixmap bloc48 = new Pixmap(Gdx.files.internal("bloc.png"));
-			Pixmap bloc16 = new Pixmap(16,16, bloc48.getFormat());
+			Pixmap bloc16 = new Pixmap(WorldRenderer.ppuX,WorldRenderer.ppuX, bloc48.getFormat());
 			bloc16.drawPixmap(bloc48, 0,0, bloc48.getWidth(), bloc48.getHeight(),
 					0,0,bloc16.getWidth(),bloc16.getHeight());
 			bloc = new TextureRegion(new Texture(bloc16));
@@ -210,10 +210,10 @@ public class TextureFactory {
 	private static TextureRegion animationPacmanLeft() {
 		if( tabRegionLeft == null){
 			tabRegionLeft = new TextureRegion[4];
-			tabRegionLeft[0] = new TextureRegion(new Texture(Gdx.files.internal("pacman-3.png")),16,16);
-			tabRegionLeft[1] = new TextureRegion(new Texture(Gdx.files.internal("pacmanLeft.png")),16,16);
-			tabRegionLeft[2] = new TextureRegion(new Texture(Gdx.files.internal("pacmanLeft-2.png")),16,16);
-			tabRegionLeft[3] = new TextureRegion(new Texture(Gdx.files.internal("pacmanLeft.png")),16,16);
+			tabRegionLeft[0] = new TextureRegion(new Texture(Gdx.files.internal("pacman-3.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
+			tabRegionLeft[1] = new TextureRegion(new Texture(Gdx.files.internal("pacmanLeft.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
+			tabRegionLeft[2] = new TextureRegion(new Texture(Gdx.files.internal("pacmanLeft-2.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
+			tabRegionLeft[3] = new TextureRegion(new Texture(Gdx.files.internal("pacmanLeft.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
 			animationLeft = new Animation<TextureRegion>(timeAnim, tabRegionLeft);
 		}
 		
@@ -225,10 +225,10 @@ public class TextureFactory {
 	private static TextureRegion animationPacmanUp() {
 		if( tabRegionUp == null){
 			tabRegionUp = new TextureRegion[4];
-			tabRegionUp[0] = new TextureRegion(new Texture(Gdx.files.internal("pacman-3.png")),16,16);
-			tabRegionUp[1] = new TextureRegion(new Texture(Gdx.files.internal("pacmanUp.png")),16,16);
-			tabRegionUp[2] = new TextureRegion(new Texture(Gdx.files.internal("pacmanUp-2.png")),16,16);
-			tabRegionUp[3] = new TextureRegion(new Texture(Gdx.files.internal("pacmanUp.png")),16,16);
+			tabRegionUp[0] = new TextureRegion(new Texture(Gdx.files.internal("pacman-3.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
+			tabRegionUp[1] = new TextureRegion(new Texture(Gdx.files.internal("pacmanUp.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
+			tabRegionUp[2] = new TextureRegion(new Texture(Gdx.files.internal("pacmanUp-2.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
+			tabRegionUp[3] = new TextureRegion(new Texture(Gdx.files.internal("pacmanUp.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
 			animationUp = new Animation<TextureRegion>(timeAnim, tabRegionUp);
 		}
 		
@@ -240,10 +240,10 @@ public class TextureFactory {
 	private static TextureRegion animationPacmanRight() {
 		if( tabRegionRight == null){
 			tabRegionRight = new TextureRegion[4];
-			tabRegionRight[0] = new TextureRegion(new Texture(Gdx.files.internal("pacman-3.png")),16,16);
-			tabRegionRight[1] = new TextureRegion(new Texture(Gdx.files.internal("pacmanRight.png")),16,16);
-			tabRegionRight[2] = new TextureRegion(new Texture(Gdx.files.internal("pacmanRight-2.png")),16,16);
-			tabRegionRight[3] = new TextureRegion(new Texture(Gdx.files.internal("pacmanRight.png")),16,16);
+			tabRegionRight[0] = new TextureRegion(new Texture(Gdx.files.internal("pacman-3.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
+			tabRegionRight[1] = new TextureRegion(new Texture(Gdx.files.internal("pacmanRight.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
+			tabRegionRight[2] = new TextureRegion(new Texture(Gdx.files.internal("pacmanRight-2.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
+			tabRegionRight[3] = new TextureRegion(new Texture(Gdx.files.internal("pacmanRight.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
 			animationRight = new Animation<TextureRegion>(timeAnim, tabRegionRight);
 		}
 		
@@ -256,10 +256,10 @@ public class TextureFactory {
 		
 		if( tabRegionDown == null){
 			tabRegionDown = new TextureRegion[4];
-			tabRegionDown[0] = new TextureRegion(new Texture(Gdx.files.internal("pacman-3.png")),16,16);
-			tabRegionDown[1] = new TextureRegion(new Texture(Gdx.files.internal("pacmanDown.png")),16,16);
-			tabRegionDown[2] = new TextureRegion(new Texture(Gdx.files.internal("pacmanDown-2.png")),16,16);
-			tabRegionDown[3] = new TextureRegion(new Texture(Gdx.files.internal("pacmanDown.png")),16,16);
+			tabRegionDown[0] = new TextureRegion(new Texture(Gdx.files.internal("pacman-3.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
+			tabRegionDown[1] = new TextureRegion(new Texture(Gdx.files.internal("pacmanDown.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
+			tabRegionDown[2] = new TextureRegion(new Texture(Gdx.files.internal("pacmanDown-2.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
+			tabRegionDown[3] = new TextureRegion(new Texture(Gdx.files.internal("pacmanDown.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
 			animationDown = new Animation<TextureRegion>(timeAnim, tabRegionDown);
 		}
 		
@@ -271,8 +271,8 @@ public class TextureFactory {
 	private static TextureRegion animationGomme() {
 		if( tabRegionGomme == null){
 			tabRegionGomme = new TextureRegion[2];
-			tabRegionGomme[0] = new TextureRegion(new Texture(Gdx.files.internal("superpellet.png")),16,16);
-			tabRegionGomme[1] = new TextureRegion(new Texture(Gdx.files.internal("superpellet-2.png")),16,16);
+			tabRegionGomme[0] = new TextureRegion(new Texture(Gdx.files.internal("superpellet.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
+			tabRegionGomme[1] = new TextureRegion(new Texture(Gdx.files.internal("superpellet-2.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
 			animationGomme = new Animation<TextureRegion>(2f/1f, tabRegionGomme);
 		}
 		
@@ -284,8 +284,8 @@ public class TextureFactory {
 	private static TextureRegion animationEscape1() {
 		if( tabRegionFantome1 == null){
 			tabRegionFantome1 = new TextureRegion[2];
-			tabRegionFantome1[0] = new TextureRegion(new Texture(Gdx.files.internal("ghostEscaping.png")),16,16);
-			tabRegionFantome1[1] = new TextureRegion(new Texture(Gdx.files.internal("ghost1.png")),16,16);
+			tabRegionFantome1[0] = new TextureRegion(new Texture(Gdx.files.internal("ghostEscaping.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
+			tabRegionFantome1[1] = new TextureRegion(new Texture(Gdx.files.internal("ghost1.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
 			animationFantome1 = new Animation<TextureRegion>(1f/2f, tabRegionFantome1);
 		}
 		
@@ -297,8 +297,8 @@ public class TextureFactory {
 	private static TextureRegion animationEscape2() {
 		if( tabRegionFantome2 == null){
 			tabRegionFantome2 = new TextureRegion[2];
-			tabRegionFantome2[0] = new TextureRegion(new Texture(Gdx.files.internal("ghostEscaping.png")),16,16);
-			tabRegionFantome2[1] = new TextureRegion(new Texture(Gdx.files.internal("ghost2.png")),16,16);
+			tabRegionFantome2[0] = new TextureRegion(new Texture(Gdx.files.internal("ghostEscaping.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
+			tabRegionFantome2[1] = new TextureRegion(new Texture(Gdx.files.internal("ghost2.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
 			animationFantome2 = new Animation<TextureRegion>(1f/2f, tabRegionFantome2);
 		}
 		
@@ -310,8 +310,8 @@ public class TextureFactory {
 	private static TextureRegion animationEscape3() {
 		if( tabRegionFantome3 == null){
 			tabRegionFantome3 = new TextureRegion[2];
-			tabRegionFantome3[0] = new TextureRegion(new Texture(Gdx.files.internal("ghostEscaping.png")),16,16);
-			tabRegionFantome3[1] = new TextureRegion(new Texture(Gdx.files.internal("ghost3.png")),16,16);
+			tabRegionFantome3[0] = new TextureRegion(new Texture(Gdx.files.internal("ghostEscaping.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
+			tabRegionFantome3[1] = new TextureRegion(new Texture(Gdx.files.internal("ghost3.png")),WorldRenderer.ppuX,WorldRenderer.ppuX);
 			animationFantome3 = new Animation<TextureRegion>(1f/2f, tabRegionFantome3);
 		}
 		

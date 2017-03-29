@@ -2,6 +2,7 @@ package com.daniel.game.model;
 
 import com.daniel.game.model.Maze;
 import com.daniel.game.model.Pacman;
+import com.daniel.game.view.WorldRenderer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,7 +21,6 @@ public class World implements Iterable<GameElement>{
 	public long timeStart = System.currentTimeMillis();
 	
 	public World(){
-		createWorld();
 	}
 	
 	public int getHeight(){
@@ -76,10 +76,10 @@ public class World implements Iterable<GameElement>{
 	
 	public void createWorld(){
 		laby = new Maze(this);
-		fantome1 = new Fantome1(new Vector2((30-11)*16,14*16),this);
-		fantome2 = new Fantome2(new Vector2((30-14)*16,14*16),this);
-		fantome3 = new Fantome3(new Vector2((30-14)*16,13*16),this);
-		pac = new Pacman(new Vector2((30-23)*16,14*16), this);
+		fantome1 = new Fantome1(new Vector2((30-11)*WorldRenderer.ppuX,14*WorldRenderer.ppuX),this);
+		fantome2 = new Fantome2(new Vector2((30-14)*WorldRenderer.ppuX,14*WorldRenderer.ppuX),this);
+		fantome3 = new Fantome3(new Vector2((30-14)*WorldRenderer.ppuX,13*WorldRenderer.ppuX),this);
+		pac = new Pacman(new Vector2((30-23)*WorldRenderer.ppuX,14*WorldRenderer.ppuX), this);
 		laby.loadDemoLevel();
 	}
 
